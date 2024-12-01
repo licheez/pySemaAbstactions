@@ -1,71 +1,3 @@
-![logo](logo.png)
-
-# SemaphoreService abstractions for python by pvWay
-
-This pip brings the abstraction interfaces for several semaphore service flavors
-
-## Interfaces and enums
-
-### SemaphoreStatusEun
-
-This enum enumerates the different possible statuses of a semaphore when trying to acquire it
-
-* **Acquired**: (success status) the semaphore was acquired
-* **ReleasedInTheMeanTime**: the semaphore was locked by someone else but when getting more info it finally appeared released.
-* **OwnedBySomeoneElse**: another process currently owns the semaphore. Other processes will have to wait until the semaphore will be released by the owner process.
-* **ForcedReleased**: the semaphore was locked by another process that seems not being responding for a while. As such, the release of the semaphore was forced.
-
-```python
-from enum import Enum
-
-class SemaphoreStatusEnu(Enum):
-    ACQUIRED = 1
-    RELEASE_IN_THE_MEAN_TIME = 2
-    OWNED_BY_SOMEONE_ELSE = 3
-    FORCED_RELEASE = 4
-```
-### SemaphoreInfo
-
-Small object that holds some useful information about the semaphore 
-
-```python
-from datetime import timedelta, datetime
-from typing import Protocol
-
-from src.pvway_sema_abs.semaphore_status_enu import SemaphoreStatusEnu
-
-class SemaphoreInfo(Protocol):
-    @property
-    def status(self) -> SemaphoreStatusEnu:
-        pass
-
-    @property
-    def name(self) -> str:
-        pass
-
-    @property
-    def owner(self) -> str:
-        pass
-
-    @property
-    def timeout(self) -> timedelta:
-        pass
-
-    @property
-    def expires_at_utc(self) -> datetime:
-        pass
-
-    @property
-    def create_date_utc(self) -> datetime:
-        pass
-
-    @property
-    def update_date_utc(self) -> datetime:
-        pass
-```
-
-### SemaphoreService
-```python
 import asyncio
 from datetime import timedelta
 from typing import Protocol, Callable, Optional, TypeVar
@@ -140,6 +72,3 @@ class SemaphoreService(Protocol):
         :return: The result of the work executed within the isolated context.
         """
         pass
-```
-
-Happy coding
