@@ -2,7 +2,7 @@ import asyncio
 from datetime import timedelta
 from typing import Protocol, Callable, Optional, TypeVar
 
-from src.pvway_sema_abs import semaphore_info
+from src.pvway_sema_abs.semaphore_info import SemaphoreInfo
 
 
 class SemaphoreService(Protocol):
@@ -10,7 +10,7 @@ class SemaphoreService(Protocol):
             self,
             name: str,
             owner: str,
-            timeout: timedelta) -> semaphore_info:
+            timeout: timedelta) -> SemaphoreInfo:
         """
         tries to acquire a semaphore
         :param name: the (unique) same of the semaphore
@@ -44,7 +44,7 @@ class SemaphoreService(Protocol):
 
     async def get_semaphore_async(
             self,
-            name: str) -> semaphore_info:
+            name: str) -> SemaphoreInfo:
         """
         return the semaphore info for a given semaphore name
         :param name: the unique name of the semaphore
