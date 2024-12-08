@@ -44,11 +44,11 @@ class SemaphoreService(Protocol):
 
     async def get_semaphore_async(
             self,
-            name: str) -> SemaphoreInfo:
+            name: str) -> SemaphoreInfo | None:
         """
         return the semaphore info for a given semaphore name
         :param name: the unique name of the semaphore
-        :return: semaphore_info
+        :return: semaphore_info if found, None otherwise
         """
         pass
 
